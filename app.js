@@ -1,10 +1,10 @@
-// Variables globales
+// Variables
 let servicios = [];
 let servicioActual = null;
 let carrito = [];
 let precioActual = 0;
 
-// Elementos del DOM
+// elementos
 const serviciosGrid = document.getElementById('serviciosGrid');
 const formularioContainer = document.getElementById('formularioContainer');
 const btnVolver = document.getElementById('btnVolver');
@@ -13,19 +13,21 @@ const carritoItems = document.getElementById('carritoItems');
 const carritoTotal = document.getElementById('carritoTotal');
 const btnFinalizar = document.getElementById('btnFinalizar');
 
-// Cargar servicios al iniciar
+// inicio
 document.addEventListener('DOMContentLoaded', () => {
     cargarServicios();
 });
 
-// Función para cargar servicios desde JSON
+// cargar los servicios
 async function cargarServicios() {
     try {
         const response = await fetch('servicios.json');
         const data = await response.json();
         servicios = data.servicios;
+        console.log('Servicios cargados:', servicios.length); // debugging
         mostrarServicios();
     } catch (error) {
+        console.log('Error al cargar:', error);
         Swal.fire({
             icon: 'error',
             title: 'Error',
@@ -34,7 +36,7 @@ async function cargarServicios() {
     }
 }
 
-// Mostrar grid de servicios
+// mostrar las cards de servicios
 function mostrarServicios() {
     serviciosGrid.innerHTML = '';
     
@@ -53,7 +55,7 @@ function mostrarServicios() {
     });
 }
 
-// Seleccionar un servicio
+// cuando seleccionan un servicio
 function seleccionarServicio(servicio) {
     servicioActual = servicio;
     serviciosGrid.style.display = 'none';
@@ -62,7 +64,8 @@ function seleccionarServicio(servicio) {
     document.getElementById('servicioSeleccionadoTitulo').textContent = servicio.nombre;
     generarFormulario();
     
-    // notificación
+    console.log('Servicio seleccionado:', servicio.nombre);
+    
     Toastify({
         text: `Configurando ${servicio.nombre}`,
         duration: 2000,
@@ -72,7 +75,7 @@ function seleccionarServicio(servicio) {
     }).showToast();
 }
 
-// Volver al grid de servicios
+// boton volver
 btnVolver.addEventListener('click', () => {
     formularioContainer.style.display = 'none';
     serviciosGrid.style.display = 'grid';
@@ -80,12 +83,12 @@ btnVolver.addEventListener('click', () => {
     formulario.reset();
 });
 
-// Generar formulario dinámico
+// armar el formulario segun el servicio
 function generarFormulario() {
     const camposDinamicos = document.getElementById('camposDinamicos');
     camposDinamicos.innerHTML = '';
     
-    // Generar campos según el servicio
+    // crear los campos
     servicioActual.campos.forEach(campo => {
         const formGroup = document.createElement('div');
         formGroup.className = 'form-group';
@@ -119,7 +122,7 @@ function generarFormulario() {
         camposDinamicos.appendChild(formGroup);
     });
     
-    // Adicionales si existen
+    // si tiene adicionales los agrego
     if (servicioActual.adicionales && servicioActual.adicionales.length > 0) {
         const adicionalesGroup = document.createElement('div');
         adicionalesGroup.className = 'form-group';
@@ -147,11 +150,11 @@ function generarFormulario() {
         camposDinamicos.appendChild(adicionalesGroup);
     }
     
-    // Eventos para calcular en tiempo real
+    // poner los eventos para que calcule el precio
     agregarEventosCalculo();
 }
 
-// Agregar eventos para calcular precio
+// eventos para calcular
 function agregarEventosCalculo() {
     const inputs = formulario.querySelectorAll('input, select');
     inputs.forEach(input => {
@@ -159,31 +162,30 @@ function agregarEventosCalculo() {
         input.addEventListener('input', calcularPrecio);
     });
     
-    // calcular inicial
-    calcularPrecio();
+    calcularPrecio(); // calculo inicial
 }
 
-// Calcular precio actual
+// calcular el precio total
 function calcularPrecio() {
     let precio = servicioActual.precioBase;
     
-    // Sumar campos dinámicos
+    // sumar los campos
     servicioActual.campos.forEach(campo => {
-        const input = document.getElementById(campo.nombre);
+        let input = document.getElementById(campo.nombre);
         
         if (campo.tipo === 'number' && input.value) {
-            const cantidad = parseInt(input.value);
+            let cantidad = parseInt(input.value);
             if (campo.multiplicador) {
                 precio += campo.multiplicador * cantidad;
             }
         } else if (campo.tipo === 'select' && input.value) {
             const opcionSeleccionada = input.options[input.selectedIndex];
-            const precioAdicional = parseInt(opcionSeleccionada.dataset.precio) || 0;
+            let precioAdicional = parseInt(opcionSeleccionada.dataset.precio) || 0;
             precio += precioAdicional;
         }
     });
     
-    // Sumar adicionales
+    // sumar adicionales si hay
     const adicionalesChecked = formulario.querySelectorAll('input[name="adicional"]:checked');
     adicionalesChecked.forEach(checkbox => {
         precio += parseInt(checkbox.dataset.precio);
@@ -191,7 +193,7 @@ function calcularPrecio() {
     
     precioActual = precio;
     
-    // Aplicar descuento por modalidad
+    // descuento por modalidad
     const modalidad = document.getElementById('modalidad').value;
     let precioFinal = precio;
     
@@ -203,16 +205,15 @@ function calcularPrecio() {
         precioFinal = precio * 0.85;
     }
     
-    // Mostrar precios
+    // mostrar
     document.getElementById('precioBase').textContent = `$${precio.toLocaleString()}`;
     document.getElementById('precioFinal').textContent = `$${Math.round(precioFinal).toLocaleString()}`;
 }
 
-// Agregar al carrito
+// agregar servicio al carrito
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // Obtener datos del formulario
     const formData = new FormData(formulario);
     const modalidad = document.getElementById('modalidad').value;
     
@@ -227,7 +228,7 @@ formulario.addEventListener('submit', (e) => {
         return;
     }
     
-    // Crear objeto del item
+    // crear el item
     const item = {
         id: Date.now(),
         servicio: servicioActual.nombre,
@@ -240,6 +241,8 @@ formulario.addEventListener('submit', (e) => {
     carrito.push(item);
     actualizarCarrito();
     
+    console.log('Item agregado al carrito:', item);
+    
     Swal.fire({
         icon: 'success',
         title: '¡Agregado!',
@@ -248,11 +251,10 @@ formulario.addEventListener('submit', (e) => {
         timer: 1500
     });
     
-    // Volver a servicios
-    btnVolver.click();
+    btnVolver.click(); // volver
 });
 
-// Calcular precio con modalidad
+// calcular precio segun modalidad
 function calcularPrecioConModalidad(precio, modalidad) {
     let descuento = 0;
     
@@ -263,11 +265,11 @@ function calcularPrecioConModalidad(precio, modalidad) {
     return Math.round(precio * (1 - descuento));
 }
 
-// Obtener detalles del servicio
+// obtener detalles del servicio configurado
 function obtenerDetalles(formData) {
     const detalles = [];
     
-    // Campos dinámicos
+    // campos
     servicioActual.campos.forEach(campo => {
         const valor = formData.get(campo.nombre);
         if (valor) {
@@ -281,7 +283,7 @@ function obtenerDetalles(formData) {
         }
     });
     
-    // Adicionales
+    // adicionales
     const adicionales = formData.getAll('adicional');
     if (adicionales.length > 0) {
         adicionales.forEach(id => {
@@ -295,7 +297,7 @@ function obtenerDetalles(formData) {
     return detalles;
 }
 
-// Actualizar carrito
+// actualizar el carrito
 function actualizarCarrito() {
     carritoItems.innerHTML = '';
     
@@ -321,18 +323,18 @@ function actualizarCarrito() {
         carritoItems.appendChild(itemDiv);
     });
     
-    // Calcular totales
+    // calcular totales
     calcularTotales();
     
     carritoTotal.style.display = 'block';
     document.getElementById('cantidadItems').textContent = `(${carrito.length})`;
 }
 
-// Calcular totales con descuentos
+// calcular totales con descuentos
 function calcularTotales() {
     let total = carrito.reduce((sum, item) => sum + item.precioFinal, 0);
     
-    // Descuento por múltiples servicios
+    // descuento por cantidad
     let descuentoMultiple = 0;
     const descuentoInfo = document.getElementById('descuentoInfo');
     
@@ -352,7 +354,7 @@ function calcularTotales() {
     document.getElementById('totalGeneral').textContent = `$${totalConDescuento.toLocaleString()}/mes`;
 }
 
-// Eliminar item del carrito
+// eliminar item
 function eliminarItem(id) {
     carrito = carrito.filter(item => item.id !== id);
     actualizarCarrito();
@@ -366,7 +368,7 @@ function eliminarItem(id) {
     }).showToast();
 }
 
-// Finalizar cotización
+// finalizar y enviar
 btnFinalizar.addEventListener('click', async () => {
     const resultado = await Swal.fire({
         title: '¿Deseas solicitar este presupuesto?',
@@ -395,7 +397,9 @@ btnFinalizar.addEventListener('click', async () => {
     });
     
     if (resultado.isConfirmed) {
-        // acá iría la lógica para enviar al backend
+        console.log('Presupuesto enviado:', resultado.value);
+        
+        // aca iria el envio real al backend
         await Swal.fire({
             icon: 'success',
             title: '¡Solicitud enviada!',
@@ -407,7 +411,7 @@ btnFinalizar.addEventListener('click', async () => {
             confirmButtonColor: '#4CAF50'
         });
         
-        // Limpiar carrito
+        // limpiar
         carrito = [];
         actualizarCarrito();
     }
