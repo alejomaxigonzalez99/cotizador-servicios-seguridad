@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureGuard - Cotizador de Servicios</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>🛡️ SecureGuard</h1>
+                <p>Seguridad Profesional a tu Medida</p>
+            </div>
+        </header>
+
+        <main>
+            <section class="intro">
+                <h2>Cotizá tu Servicio de Seguridad</h2>
+                <p>Seleccioná el servicio que necesitás y obtené una cotización personalizada al instante</p>
+            </section>
+
+            <div class="cotizador-wrapper">
+                <!-- Selector de servicios -->
+                <div class="servicios-grid" id="serviciosGrid">
+                    <!-- Se genera desde JS -->
+                </div>
+
+                <!-- Formulario dinámico -->
+                <div class="formulario-container" id="formularioContainer" style="display: none;">
+                    <div class="form-header">
+                        <h3 id="servicioSeleccionadoTitulo"></h3>
+                        <button class="btn-volver" id="btnVolver">← Volver</button>
+                    </div>
+                    <form id="formularioCotizacion">
+                        <div id="camposDinamicos"></div>
+                        
+                        <div class="form-group">
+                            <label>Modalidad de Contratación</label>
+                            <select id="modalidad" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="mensual">Mensual</option>
+                                <option value="trimestral">Trimestral (-5%)</option>
+                                <option value="semestral">Semestral (-10%)</option>
+                                <option value="anual">Anual (-15%)</option>
+                            </select>
+                        </div>
+
+                        <div class="cotizacion-preview" id="cotizacionPreview">
+                            <div class="precio-base">
+                                <span>Precio Base:</span>
+                                <strong id="precioBase">$0</strong>
+                            </div>
+                            <div class="precio-final">
+                                <span>Total Estimado:</span>
+                                <strong id="precioFinal">$0</strong>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Agregar al Carrito</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Carrito -->
+                <div class="carrito-sidebar" id="carritoSidebar">
+                    <h3>Tu Cotización <span id="cantidadItems">(0)</span></h3>
+                    <div class="carrito-items" id="carritoItems">
+                        <p class="carrito-vacio">No hay servicios agregados</p>
+                    </div>
+                    <div class="carrito-total" id="carritoTotal" style="display: none;">
+                        <div class="descuento-info" id="descuentoInfo"></div>
+                        <div class="total-final">
+                            <span>Total:</span>
+                            <strong id="totalGeneral">$0</strong>
+                        </div>
+                        <button class="btn-finalizar" id="btnFinalizar">Solicitar Presupuesto</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>SecureGuard © 2024 - Protegemos lo que más valorás</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="app.js"></script>
+</body>
+</html>

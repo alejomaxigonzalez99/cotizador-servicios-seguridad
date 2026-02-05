@@ -1,0 +1,230 @@
+{
+  "servicios": [
+    {
+      "id": "empresarial",
+      "nombre": "Seguridad Empresarial",
+      "icono": "🏢",
+      "descripcion": "Protección integral para tu empresa con personal capacitado y tecnología de punta",
+      "precioBase": 85000,
+      "campos": [
+        {
+          "tipo": "number",
+          "nombre": "cantidadGuardias",
+          "label": "Cantidad de Guardias",
+          "min": 1,
+          "max": 20,
+          "required": true,
+          "multiplicador": 85000
+        },
+        {
+          "tipo": "select",
+          "nombre": "turno",
+          "label": "Tipo de Turno",
+          "opciones": [
+            {"valor": "diurno", "texto": "Diurno (8hs)", "precio": 0},
+            {"valor": "nocturno", "texto": "Nocturno (8hs)", "precio": 15000},
+            {"valor": "24hs", "texto": "24 horas", "precio": 45000}
+          ],
+          "required": true
+        }
+      ],
+      "adicionales": [
+        {"id": "camaras", "nombre": "Sistema de Cámaras", "precio": 25000},
+        {"id": "alarma", "nombre": "Sistema de Alarmas", "precio": 18000},
+        {"id": "control_acceso", "nombre": "Control de Acceso", "precio": 22000},
+        {"id": "panico", "nombre": "Botón de Pánico", "precio": 12000}
+      ]
+    },
+    {
+      "id": "hogar",
+      "nombre": "Seguridad del Hogar",
+      "icono": "🏠",
+      "descripcion": "Protege tu hogar y a tu familia con nuestro servicio de monitoreo 24/7",
+      "precioBase": 35000,
+      "campos": [
+        {
+          "tipo": "select",
+          "nombre": "tipoVivienda",
+          "label": "Tipo de Vivienda",
+          "opciones": [
+            {"valor": "departamento", "texto": "Departamento", "precio": 0},
+            {"valor": "casa", "texto": "Casa", "precio": 8000},
+            {"valor": "duplex", "texto": "Dúplex/Triplex", "precio": 12000}
+          ],
+          "required": true
+        },
+        {
+          "tipo": "number",
+          "nombre": "ambientes",
+          "label": "Cantidad de Ambientes",
+          "min": 1,
+          "max": 15,
+          "required": true,
+          "multiplicador": 2500
+        }
+      ],
+      "adicionales": [
+        {"id": "camaras_ip", "nombre": "Cámaras IP (pack x4)", "precio": 35000},
+        {"id": "sensores", "nombre": "Sensores de Movimiento", "precio": 15000},
+        {"id": "app_movil", "nombre": "App Móvil Premium", "precio": 8000},
+        {"id": "ronda", "nombre": "Ronda Nocturna", "precio": 18000}
+      ]
+    },
+    {
+      "id": "gps",
+      "nombre": "Rastreo GPS Vehicular",
+      "icono": "🚗",
+      "descripcion": "Monitoreo en tiempo real de tu flota o vehículo particular",
+      "precioBase": 12000,
+      "campos": [
+        {
+          "tipo": "number",
+          "nombre": "cantidadVehiculos",
+          "label": "Cantidad de Vehículos",
+          "min": 1,
+          "max": 50,
+          "required": true,
+          "multiplicador": 12000
+        },
+        {
+          "tipo": "select",
+          "nombre": "tipoVehiculo",
+          "label": "Tipo de Vehículo",
+          "opciones": [
+            {"valor": "auto", "texto": "Auto/Camioneta", "precio": 0},
+            {"valor": "moto", "texto": "Moto", "precio": -2000},
+            {"valor": "camion", "texto": "Camión/Utilitario", "precio": 5000}
+          ],
+          "required": true
+        }
+      ],
+      "adicionales": [
+        {"id": "corte_motor", "nombre": "Corte de Motor Remoto", "precio": 8000},
+        {"id": "geocercas", "nombre": "Geocercas Ilimitadas", "precio": 5000},
+        {"id": "reportes", "nombre": "Reportes Avanzados", "precio": 6000},
+        {"id": "sensor_combustible", "nombre": "Sensor de Combustible", "precio": 15000}
+      ]
+    },
+    {
+      "id": "eventos",
+      "nombre": "Seguridad para Eventos",
+      "icono": "🎭",
+      "descripcion": "Personal de seguridad especializado para eventos corporativos y sociales",
+      "precioBase": 45000,
+      "campos": [
+        {
+          "tipo": "number",
+          "nombre": "duracionHoras",
+          "label": "Duración del Evento (horas)",
+          "min": 2,
+          "max": 24,
+          "required": true,
+          "multiplicador": 15000
+        },
+        {
+          "tipo": "number",
+          "nombre": "cantidadPersonal",
+          "label": "Cantidad de Personal",
+          "min": 2,
+          "max": 30,
+          "required": true,
+          "multiplicador": 8000
+        },
+        {
+          "tipo": "select",
+          "nombre": "tipoEvento",
+          "label": "Tipo de Evento",
+          "opciones": [
+            {"valor": "social", "texto": "Social (hasta 150 personas)", "precio": 0},
+            {"valor": "corporativo", "texto": "Corporativo", "precio": 15000},
+            {"valor": "masivo", "texto": "Masivo (+500 personas)", "precio": 35000}
+          ],
+          "required": true
+        }
+      ],
+      "adicionales": [
+        {"id": "detector_metales", "nombre": "Detector de Metales", "precio": 12000},
+        {"id": "control_entrada", "nombre": "Control de Entradas", "precio": 8000},
+        {"id": "estacionamiento", "nombre": "Seguridad en Estacionamiento", "precio": 10000}
+      ]
+    },
+    {
+      "id": "vip",
+      "nombre": "Seguridad VIP",
+      "icono": "👔",
+      "descripcion": "Protección personalizada de alto nivel para ejecutivos y personalidades",
+      "precioBase": 180000,
+      "campos": [
+        {
+          "tipo": "select",
+          "nombre": "nivelProteccion",
+          "label": "Nivel de Protección",
+          "opciones": [
+            {"valor": "basico", "texto": "Básico (1 agente)", "precio": 0},
+            {"valor": "medio", "texto": "Medio (2 agentes)", "precio": 120000},
+            {"valor": "alto", "texto": "Alto (equipo completo)", "precio": 280000}
+          ],
+          "required": true
+        },
+        {
+          "tipo": "number",
+          "nombre": "diasSemana",
+          "label": "Días por Semana",
+          "min": 1,
+          "max": 7,
+          "required": true,
+          "multiplicador": 25000
+        }
+      ],
+      "adicionales": [
+        {"id": "vehiculo_blindado", "nombre": "Vehículo Blindado", "precio": 150000},
+        {"id": "chofer", "nombre": "Chofer Especializado", "precio": 85000},
+        {"id": "analisis_riesgo", "nombre": "Análisis de Riesgos", "precio": 45000},
+        {"id": "escolta_armada", "nombre": "Escolta Armada", "precio": 95000}
+      ]
+    },
+    {
+      "id": "custodia",
+      "nombre": "Custodia y Traslado de Valores",
+      "icono": "💰",
+      "descripcion": "Transporte seguro de dinero, documentos y objetos de valor",
+      "precioBase": 55000,
+      "campos": [
+        {
+          "tipo": "number",
+          "nombre": "frecuenciaMensual",
+          "label": "Frecuencia Mensual (servicios)",
+          "min": 1,
+          "max": 30,
+          "required": true,
+          "multiplicador": 18000
+        },
+        {
+          "tipo": "select",
+          "nombre": "tipoValor",
+          "label": "Tipo de Valor",
+          "opciones": [
+            {"valor": "efectivo", "texto": "Efectivo (hasta $500k)", "precio": 0},
+            {"valor": "documentos", "texto": "Documentos", "precio": -8000},
+            {"valor": "joyas", "texto": "Joyas/Objetos de Valor", "precio": 25000}
+          ],
+          "required": true
+        },
+        {
+          "tipo": "number",
+          "nombre": "distanciaKm",
+          "label": "Distancia Promedio (km)",
+          "min": 1,
+          "max": 200,
+          "required": true,
+          "multiplicador": 500
+        }
+      ],
+      "adicionales": [
+        {"id": "seguro", "nombre": "Seguro de Carga", "precio": 35000},
+        {"id": "custodia_armada", "nombre": "Custodia Armada", "precio": 45000},
+        {"id": "vehiculo_especial", "nombre": "Vehículo Especial", "precio": 38000}
+      ]
+    }
+  ]
+}
